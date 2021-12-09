@@ -2,36 +2,21 @@ use std::fs;
 
 fn main() {
     let values = read_values();
-    let incs = find_increments_3(values);
 
-    dbg!(incs);
+    dbg!(find_increments(&values, 1));
+    dbg!(find_increments(&values, 3));
 }
 
-fn find_increments_1(values: Vec<u32>) -> u32 {
+fn find_increments(values: &Vec<u32>, window: usize) -> u32 {
     let mut incs = 0;
     let mut prev = values[0];
 
-    for i in 1..values.len() {
+    for i in window..values.len() {
         if values[i] > prev {
             incs = incs + 1;
         }
 
-        prev = values[i];
-    }
-
-    incs
-}
-
-fn find_increments_3(values: Vec<u32>) -> u32 {
-    let mut incs = 0;
-    let mut prev = values[0];
-
-    for i in 3..values.len() {
-        if values[i] > prev {
-            incs = incs + 1;
-        }
-
-        prev = values[i-2];
+        prev = values[i-(window - 1)];
     }
 
     incs
